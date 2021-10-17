@@ -3,7 +3,6 @@ import re
 import telebot
 from telebot import types
 
-
 data_user = []
 
 
@@ -29,9 +28,10 @@ def manager(message, client):
         markup.add(telebot.types.InlineKeyboardButton(text='Обществознание', callback_data='Обществознание'))
         client.send_message(message.chat.id, text="Выбери предмет!", reply_markup=markup)
 
-    @client.callback_query_handler(func=lambda call: call.data)
+    @client.callback_query_handler(
+        func=lambda call: call.data and call.data != "Верно" and call.data != "Отредактировать")
     def handle_chosen_subject(call):
-        client.send_message(call.chat_id, text="Выбери тариф!")
+        client.send_message(call.message.chat.id, text="Выбери тариф!")
         keyboard_tarif = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True, one_time_keyboard=True)
         # TODO: вытягивание тарифов.
         # get_all_tarifes_avalible
@@ -62,15 +62,6 @@ def manager(message, client):
                                     subject_tarif[1] + '\n' + 'Ф.И.О: ' + dan[0] + '\n' + 'VK: ' + dan[
                                         1] + '\n' + 'Email: ' +
                                     dan[2], reply_markup=markup)
-                # temp_d.append('Математика')
-                # temp_d.append(data_user[1])
-                # temp_d.append(dan[0])
-                # temp_d.append(dan[1])
-                # temp_d.append(dan[2])
-                # temo_l = dict(zip(temp, temp_d))
-                # print(type((temo_l)))
-                # lya_kuratora = 'Ф.И.О.: ' + dan[0] + '\n' + 'VK: ' + dan[1]
-                # data_user.append(dlya_kuratora)
             else:
                 send = client.send_message(message.chat.id,
                                            'Проверь данные email или vk и отправь мне данные заново')

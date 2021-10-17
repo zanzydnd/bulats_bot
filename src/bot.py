@@ -22,3 +22,5 @@ def main(message):
     # TODO: кураторы
     elif curator_boolean:
         curator(message, client)
+
+client.polling()
