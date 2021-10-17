@@ -2,3 +2,4 @@
 venv/
 src/conf.py
 src/tes.py
+src/__pycache__
